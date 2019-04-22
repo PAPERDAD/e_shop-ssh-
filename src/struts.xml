@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<!-- 指定全局国际化资源文件 -->
+	<constant name="struts.custom.i18n.resources" value="information"/>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+	<constant name="struts.devMode" value="true" />
+	
+	<!-- 所有的Action定义都应该放在package下 -->	
+     <package name="default" extends="json-default">
+     	<interceptors>
+     		<interceptor name="authorityInterceptor" class="interceptor.AuthorityInterceptor"/>
+     		<interceptor-stack name="default">
+     			<interceptor-ref name="json"/>
+     			<interceptor-ref name="defaultStack"/>
+     		</interceptor-stack>
+     	</interceptors>
+     	<default-interceptor-ref name="default"/>
+     </package>
+
+      <package name="shop"  extends="default" strict-method-invocation="false">
+
+ 
+      <global-results>
+      	<result name="aindex">/WEB-INF/main/aindex.jsp</result>
+      	<result name="ulogin">/ulogin.jsp</result>
+      	<result name="index">/index.jsp</result>
+      	<result name= "register">/register.jsp</result>
+      </global-results>
+      
+
+      
+	  	<action name="category_*" class="categoryAction" method="{1}">
+	  		<result name="index">/index.jsp</result>
+	  		
+	  		<result name="query" type="json">
+	  			<param name="root">queryList</param>
+	  			<param name="excludeProperties">
+	  				\[\d+\]\.hot,\[\d+\]\.account
+	  			</param>
+	  		</result>
+	  		
+	  		<result name="jsonMap" type="json">
+	  			<param name="root">pageMap</param>
+	  			<param name="excludeProperties">
+	  				rows\[\d+\]\.account\.pass
+	  			</param>
+	  		</result>
+	  		
+	  		<result name="stream" type="stream">
+	  			<param name="inputName">inputStream</param>
+	  		</result>
+	  	</action>
+	  	
+	  	<action name="account_*" class="accountAction" method="{1}">
+	  		<result name="query" type="json">
+	  			<param name="root">queryList</param>
+	  			<param name="excludeProperties">
+	  				\[\d+\]\.pass,\[\d+\]\.name
+	  			</param>
+	  		</result>
+	  	</action>
+	  	
+	  	<action name="sorder_*" class="sorderAction" method="{1}">
+	  		<result name="showCart">/WEB-INF/user/showCart.jsp</result>
+	  		<result name="stream" type="stream">
+	  			<param name="inputName">inputStream</param>
+	  		</result>
+	  		<result name="jsonList" type="json">
+	  			<param name="root">queryList</param>
+	  		</result>
+	  	</action>
+	  	
+	  	<action name="forder_*" class="forderAction" method="{1}">
+	  		<result name="bank">/WEB-INF/user/bank.jsp</result>
+	  		<result name="jsonMap" type="json">
+	  			<param name="root">pageMap</param>
+	  			<param name="excludeProperties">
+	  				rows\[\d+\]\.sorders,rows\[\d+\]\.user\.pass,rows\[\d+\]\.user\.login,
+	  			</param>
+	  		</result>	
+	  	</action>
+	  	
+	  	<action name="user_*" class="userAction" method="{1}">
+	  		<result name="login" type="redirect">/ulogin.jsp</result>
+	  		<result name="goURL" type="redirect">
+	  			${#session.goURL}
+	  		</result>
+	  		<result name="stream" type="stream">
+	  			<param name="inputName">inputStream</param>
+	  		</result>
+	  	</action>
+	  	
+	  	<action name="product_*" class="productAction" method="{1}">
+	  		<interceptor-ref name="fileUpload">
+	  			<param name="allowedTypes">image/jpeg,image/gif,image/png</param>
+	  			<param name="maximumSize">2000000</param>
+	  		</interceptor-ref>
+	  		<interceptor-ref name="default"/>
+	  		<result name="jsonMap" type="json">
+	  			<param name="root">pageMap</param>
+	  			<param name="excludeProperties">
+	  				rows\[\d+\]\.category\.account
+	  			</param>
+	  		</result>	
+	  		<result name="detail">/detail.jsp</result>
+	  		<result name="stream" type="stream">
+	  			<param name="inputName">inputStream</param>
+	  		</result>
+	  		<result name="search">/search.jsp</result>	
+	  	</action>
+	  	
+	  	<action name="checkImage" class="checkImageAction">
+	  	</action>
+	  	
+	  	<action name="pay_*" class="payAction" method="{1}">
+	  		<result name="pay">/WEB-INF/user/pay.jsp</result>
+	  		
+	  	</action>
+	  	
+	  	
+	    <action name="send_user_*" class="sendAction">
+	        <interceptor-ref name="authorityInterceptor"/>
+	        <interceptor-ref name="default"/>
+	  		<result name="send">/WEB-INF/user/{1}.jsp</result>
+	  	</action>
+	  	
+	  	<action name="send_*_*" class="sendAction">
+	  		<result name="send">/WEB-INF/{1}/{2}.jsp</result>
+	  	</action>
+	  	
+	  	
+
+	  	
+
+	  </package>
+
+
+
+
+</struts>

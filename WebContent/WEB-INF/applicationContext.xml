@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+	xmlns="http://www.springframework.org/schema/beans"
+	 xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+     http://www.springframework.org/schema/context
+	 http://www.springframework.org/schema/context/spring-context.xsd
+	 http://www.springframework.org/schema/aop
+	 http://www.springframework.org/schema/aop/spring-aop-4.3.xsd 
+	 http://www.springframework.org/schema/tx
+	 http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+	 http://www.springframework.org/schema/util
+	 http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	<!-- 加载容器国际化所需要的语言资源文件 -->
+	<!-- Spring容器会检测容器中所有Bean，如果发现某个Bean实现了
+	ApplicationContextAware接口，Spring容器会在创建该Bean之后，
+	自动调用该Bean的setApplicationContext()方法，调用该方法时，
+	会将容器本身作为参数传给该方法。-->
+
+	
+	<context:component-scan base-package="action,serviceImpl,utilImpl,daoImpl"/>
+	<!-- 导入connection.properties 和   fileSavePath.properties-->
+	<context:property-placeholder location="/WEB-INF/fileSavePath.properties,/WEB-INF/pay.properties,/WEB-INF/connection.properties,
+	/WEB-INF/messageSetting.properties"/>
+	<bean id="date" class="java.util.Date"/>
+    
+
+	
+	
+	
+	
+	<!-- Database and  Transaction -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${driverClass}"/>
+		<property name="jdbcUrl" value="${jdbcUrl}"/>
+		<property name="user" value="${user}"/>
+		<property name="password" value="${password}"/>
+		<property name="maxPoolSize" value="${maxPoolSize}"/>
+		 <property name="minPoolSize" value="${minPoolSize}"/>
+		 <property name="initialPoolSize" value="${initialPoolSize}"/>
+		 <property name="maxIdleTime" value="${maxIdleTime}"/>
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<!-- <property name="configLocation" value="classpath:hibernate.cfg.xml"/> -->
+		<property name="annotatedClasses">
+			<list>
+				<value>model.Category</value>
+				<value>model.Account</value>
+				<value>model.Product</value>
+				<value>model.Sorder</value>
+				<value>model.Forder</value>
+				<value>model.Status</value>
+				<value>model.User</value>
+			</list>
+		</property> 
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+		        <prop key="hibernate.fromat_sql">${hibernate.fromat_sql}</prop>
+		        <prop key="hibernate.cache.use_second_level_cache">true</prop>
+		        <prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<tx:advice id="advice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="get*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="query*" propagation="REQUIRED"/>
+			<tx:method name="queryJoinAccount*" propagation="REQUIRED"/>
+			<tx:method name="getCount*" propagation="REQUIRED"/>
+			<tx:method name="login*" propagation="REQUIRED"/>
+			<tx:method name="register*" propagation="REQUIRED"/>
+			<tx:method name="isExisted*" propagation="REQUIRED"/>
+			<tx:method name="*" propagation="SUPPORTS"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut id="pointcut" expression="execution(* serviceImpl.*.*(..))"/>
+		<aop:advisor advice-ref="advice" pointcut-ref="pointcut"/>
+	</aop:config>
+
+
+</beans>

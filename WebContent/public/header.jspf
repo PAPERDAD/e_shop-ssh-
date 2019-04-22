@@ -1,0 +1,53 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+        
+            <div class="header">
+                <!--头部开始-->
+                        <div class="top_bar clear">
+                            <!--头部小导航-->
+                            <div class="welcom fl">欢迎光临BearShop! </div>
+                            <ul class="top_links fr">
+                                <li class="highlight"><a href="${shop}/index.jsp">首页</a></li> 
+                                <li><a href="send_user_showCart.action">购物车</a></li>
+                                <c:choose>
+                                <c:when test="${empty sessionScope.user}">
+                                	<li><a href="${shop}/register.jsp">注册</a></li>
+                                	<li ><a href="${shop}/ulogin.jsp">登录</a></li>
+                                </c:when>
+                                <c:when test="${not empty sessionScope.user}">
+                                    <li><a href="#">我的账户</a></li>
+                                	<li><a href="#">你好，${sessionScope.user.login}</a></li>
+                                	<li><a href="user_exit.action">注销</a></li>
+                                </c:when>
+                                </c:choose>
+                            </ul>
+                            <!--头部小导航结束-->
+                            <!-- logo -->
+                            <h1 class="logo clear fl"> <a href="index.html"><img src="images/logo.png" /></a> </h1>
+                            <!-- 购物车 -->
+                            <div class="minicart">
+                                <a class="minicart_link" href="#">
+                                    <span class="item">
+                                        <b>${sessionScope.forder.count}</b> 件
+                                    </span>
+                                    <span class="price">
+                                        <b>${sessionScope.forder.total}</b>
+                                    </span>
+                                </a>
+                            </div>
+                            <!-- 购物车结束 -->
+                            <!-- 搜索框 -->
+                            <div class="header_search">
+                                <div class="form-search ">
+                                	<form  action="product_search.action" method="post">
+                                    <input name="name" value="请输入商品名称" class="input-text"  type="text"/>
+                                    <button type="submit" title="Search"></button>
+                                    </form>
+                                </div>
+                            </div>
+                   
+                        </div>
+                    
+            </div>
+        

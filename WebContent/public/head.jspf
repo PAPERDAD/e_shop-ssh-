@@ -1,0 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<c:set value="${pageContext.request.contextPath}" var="shop"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>熊熊商城</title>
+<link rel="stylesheet" href="${shop}/css/public.css"/>
+<link rel="stylesheet" href="${shop}/css/style.css"/>
+<link rel="stylesheet" href="${shop}/easyui/themes/icon.css" type="text/css"/>
+<link rel="stylesheet" href="${shop}/easyui/themes/metro/easyui.css" type="text/css"/>
+<script type="text/javascript" src="${shop}/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="${shop}/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${shop}/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="${shop}/jschart/jscharts.js"></script>

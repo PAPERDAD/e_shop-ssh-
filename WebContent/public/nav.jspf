@@ -1,0 +1,64 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+ <div class="nav">
+            <ul class="primary_nav">
+                <li class="active highlight"><a href="#">女装</a>
+                    <!--二级菜单-->
+                    <ul class="sub_menu">
+                        <li> <a href="#">裙装</a>
+                            <ul>
+                                <li><a href="#">短裙</a></li>
+                                <li><a href="#">短裤 </a></li>
+                                <li><a href="#">裤子</a></li>
+                                <li><a href="#">卡其裤</a></li>
+                                <li><a href="#">休闲裤</a></li>
+                                <li><a href="#">牛仔裤</a></li>
+                                <li><a href="#">风衣 & 运动夹克</a></li>
+                            </ul>
+                        </li>
+                        <li> <a href="#">装饰品 </a>
+                            <ul>
+                                <li><a href="#"> 太阳镜</a></li>
+                                <li><a href="#">围巾 </a></li>
+                                <li><a href="#">发饰品 </a></li>
+                                <li><a href="#">帽子和手套 </a></li>
+                                <li><a href="#">生活时尚 </a></li>
+                                <li><a href="#">牛仔系列 </a></li>
+                                <li><a href="#">风衣 & 西服</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                    <!--二级菜单结束-->
+                
+                <li><a href="#">男装</a>
+                    <!--二级菜单-->
+                    <ul class="sub_menu">
+                        <li> <a href="#">男士夏装</a>
+                            <ul>
+                                <li><a href="#">裤子</a></li>
+                                <li><a href="#">休闲裤</a></li>
+                                <li><a href="#">卡其裤</a></li>
+                                <li><a href="#">牛仔裤</a></li>
+                                <li><a href="#">风衣 & 运动夹克</a></li>
+                            </ul>
+                        </li>
+                         <li> <a href="#">装饰品 </a>
+                            <ul>
+                                <li><a href="#"> 太阳镜</a></li>
+                                <li><a href="#">围巾 </a></li>
+                                <li><a href="#">发饰品 </a></li>
+                                <li><a href="#">帽子和手套 </a></li>
+                                <li><a href="#">生活时尚 </a></li>
+                                <li><a href="#">牛仔系列 </a></li>
+                                <li><a href="#">风衣 & 西服</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!--二级菜单结束-->
+                </li>
+                <li><a href="#">儿童</a></li>
+                <li><a href="#">时尚</a></li>
+                <li><a href="#">装饰品 </a></li>
+            </ul>
+        </div>
